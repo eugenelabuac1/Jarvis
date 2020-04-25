@@ -1,4 +1,4 @@
-To run the program. Open ui.py and press the manual button.
+To run the program. Run ui.py and press the manual button.
 Available commands:
 	Search commands
 		"jarvis search google" - searches google for the query
