@@ -1,1 +1,18 @@
-Sample
+To run the program. Open ui.py and press the manual button.
+Available commands:
+	Search commands
+		"jarvis search google" - searches google for the query
+		"jarvis search youtube" - searches youtube for the query
+	Open commands
+		"jarvis open chrome" - opens chrome application
+		"jarvis open word" - opens MS word application
+		"jarvis open excel" - opens MS excel application
+		"jarvis open powerpoint" - opens MS powerpoint application
+	System commands
+		"jarvis shutdown computer" - shutsdown pc in 20 seconds
+		"jarvis restart computer" - restart pc in 20 seconds
+	Database access commands
+		"jarvis display history" - displays history stored in the database
+
+
+	
