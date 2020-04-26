@@ -105,21 +105,6 @@ def commands():
         p1.join()
         p2.join()
 
-#   if text == "jarvis open teams":
-#        p1=multiprocessing.Process(target=talk, args=('Opening teams', ))
-#        p2=multiprocessing.Process(target=os.system, args=('start C:\Users\"TYPE USER HERE"\AppData\Local\Microsoft\Teams\Update.exe --processStart "Teams.exe"', ))
-#        p1.start()
-#        p2.start()
-#        p1.join()
-#        p2.join()
-
-#    if text == "jarvis open onedrive":
-#        p1=multiprocessing.Process(target=talk, args=('Opening onedrive', ))
-#        p2=multiprocessing.Process(target=os.system, args=('start C:\Users\"TYPE USER HERE"\AppData\Local\Microsoft\OneDrive\OneDrive.exe', ))
-#        p1.start()
-#        p2.start()
-#        p1.join()
-#        p2.join()
 
     if text == "jarvis open matlab":
         p1=multiprocessing.Process(target=talk, args=('Opening matlab', ))
