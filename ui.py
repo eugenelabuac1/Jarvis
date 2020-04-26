@@ -1,26 +1,24 @@
-''' UI of Jarvis '''
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Apr 23 21:13:27 2020
+
+@author: eugen
+"""
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Jarvis(object):
     def setupUi(self, Jarvis):
-          
-
         Jarvis.setObjectName("Jarvis")
-        Jarvis.setFixedSize(597, 600)
-        
-    
-        
+        Jarvis.resize(597, 502)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Jarvis.setWindowIcon(icon)
         Jarvis.setAutoFillBackground(False)
         Jarvis.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(Jarvis)
         self.centralwidget.setObjectName("centralwidget")
-
-        
         self.labelJarvis = QtWidgets.QLabel(self.centralwidget)
         self.labelJarvis.setGeometry(QtCore.QRect(0, 60, 591, 111))
         font = QtGui.QFont()
@@ -41,16 +39,17 @@ class Ui_Jarvis(object):
         self.labelJarvis.setObjectName("labelJarvis")
         
         #Input for Text to Speech
-        self.txtsp = QtWidgets.QLineEdit(self.centralwidget)
-        self.txtsp.setGeometry(QtCore.QRect(0, 530, 341, 71))
-        self.txtsp.setText("")
-        self.txtsp.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.txtsp.setObjectName("lineEdit")
+        self.txttspeech = QtWidgets.QTextEdit(self.centralwidget)
+        self.txttspeech.setGeometry(QtCore.QRect(0, 430, 351, 71))
+        self.txttspeech.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.txttspeech.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.txttspeech.setDocumentTitle("")
+        self.txttspeech.setObjectName("txttspeech")
         
         #Button for pushing Text
         self.pushText = QtWidgets.QPushButton(self.centralwidget)
         self.pushText.setEnabled(True)
-        self.pushText.setGeometry(QtCore.QRect(360, 530, 71, 71))
+        self.pushText.setGeometry(QtCore.QRect(360, 430, 71, 71))
         self.pushText.setAccessibleDescription("")
         self.pushText.setAutoFillBackground(False)
         self.pushText.setStyleSheet("QPushButton {\n"
@@ -85,7 +84,6 @@ class Ui_Jarvis(object):
         self.pushText.setProperty("pixmap", QtGui.QPixmap("wicon.png"))
         self.pushText.setObjectName("pushText")
         
-        
         #Help Button
         self.pushHelp = QtWidgets.QPushButton(self.centralwidget)
         self.pushHelp.setGeometry(QtCore.QRect(540, 0, 51, 51))
@@ -114,7 +112,7 @@ class Ui_Jarvis(object):
 "    }")
         self.pushHelp.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("helpp.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushHelp.setIcon(icon2)
         self.pushHelp.setIconSize(QtCore.QSize(40, 40))
         self.pushHelp.setFlat(True)
@@ -130,11 +128,11 @@ class Ui_Jarvis(object):
         self.label_gif.setScaledContents(True)
         self.label_gif.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse)
         self.label_gif.setObjectName("label_gif")
-        self.label_gif.setMovie(wave)
-        wave.start()
+        
+        
         #Manual Mic
         self.pushMic = QtWidgets.QPushButton(self.centralwidget)
-        self.pushMic.setGeometry(QtCore.QRect(520, 530, 71, 71))
+        self.pushMic.setGeometry(QtCore.QRect(520, 430, 71, 71))
         self.pushMic.setStyleSheet("QPushButton {\n"
 "    color: #333;\n"
 "    \n"
@@ -167,7 +165,7 @@ class Ui_Jarvis(object):
         
         #Automatic Mic
         self.pushMic_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushMic_2.setGeometry(QtCore.QRect(440, 530, 71, 71))
+        self.pushMic_2.setGeometry(QtCore.QRect(440, 430, 71, 71))
         self.pushMic_2.setAutoFillBackground(False)
         self.pushMic_2.setStyleSheet("QPushButton {\n"
 "    color: #333;\n"
@@ -209,54 +207,29 @@ class Ui_Jarvis(object):
         
         #Manual Label
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(540, 520, 47, 13))
+        self.label_2.setGeometry(QtCore.QRect(540, 420, 47, 13))
         self.label_2.setObjectName("label_2")
         
         #Automatic Label
         self.label_A = QtWidgets.QLabel(self.centralwidget)
-        self.label_A.setGeometry(QtCore.QRect(450, 520, 47, 13))
+        self.label_A.setGeometry(QtCore.QRect(450, 420, 47, 13))
         self.label_A.setObjectName("label_A")
         Jarvis.setCentralWidget(self.centralwidget)
-
-
-        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setGeometry(QtCore.QRect(390, 370, 201, 121))
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 199, 119))
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.labelStatus= QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.labelStatus.setGeometry(QtCore.QRect(0, 0, 201, 121))
-        self.labelStatus.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-
-        self.labelStatus.setScaledContents(True)
-        self.labelStatus.setObjectName("labelStatus")
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        
-
-        
-        def Status():
-            inp = self.txtsp.text()
-            self.labelStatus.setText("\nYou typed: \n \n" + inp)
-            self.txtsp.setText("") 
-
-        
-        self.pushText.clicked.connect(Status)
 
         self.retranslateUi(Jarvis)
         QtCore.QMetaObject.connectSlotsByName(Jarvis)
     
         
-
-    
+        
        
+       
+        
+        
 
     def retranslateUi(self, Jarvis):
         _translate = QtCore.QCoreApplication.translate
         Jarvis.setWindowTitle(_translate("Jarvis", "Jarvis"))
-        self.txtsp.setPlaceholderText(_translate("MainWindow", "Please Input Text"))
-        
+        self.txttspeech.setPlaceholderText(_translate("Jarvis", "Please input text to convert to speech"))
         self.label_2.setText(_translate("Jarvis", "Manual"))
         self.label_A.setText(_translate("Jarvis", "Automatic"))
 
@@ -269,38 +242,19 @@ class Ui_Jarvis(object):
 class Ui_HelpWindow(object):
     def setupUi(self, HelpWindow):
         HelpWindow.setObjectName("HelpWindow")
-        HelpWindow.setFixedSize(632, 600)
+        HelpWindow.resize(495, 543)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         HelpWindow.setWindowIcon(icon)
         HelpWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(HelpWindow)
         self.centralwidget.setObjectName("centralwidget")
-        #Scroll Bar
-        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setGeometry(QtCore.QRect(-10, 0, 641, 601))
-        self.scrollArea.setAutoFillBackground(False)
-        self.scrollArea.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.scrollArea.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.scrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 622, 1417))
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        
-        #Instructions of jarvis
-        self.help = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.help.setText("")
-        self.help.setPixmap(QtGui.QPixmap("jarvis help.jpg"))
-        self.help.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.help.setObjectName("label")
-        self.verticalLayout.addWidget(self.help)
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 30, 491, 61))
+        font = QtGui.QFont()
+        font.setPointSize(40)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
         HelpWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(HelpWindow)
@@ -309,6 +263,7 @@ class Ui_HelpWindow(object):
     def retranslateUi(self, HelpWindow):
         _translate = QtCore.QCoreApplication.translate
         HelpWindow.setWindowTitle(_translate("HelpWindow", "Jarvis-Help"))
+        self.label.setText(_translate("HelpWindow", "How to use Jarvis"))
         
         
 
@@ -347,9 +302,6 @@ class Ui_History(object):
     def setupUi(self, Ui_History,action):
         Ui_History.setObjectName("Ui_History")
         Ui_History.resize(800, 600)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        Ui_History.setWindowIcon(icon)        
         self.centralwidget = QtWidgets.QWidget(Ui_History)
         self.centralwidget.setObjectName("centralwidget")
         self.dbTable = QtWidgets.QTableWidget(self.centralwidget)
@@ -385,12 +337,7 @@ class Ui_History(object):
 
 if __name__ == "__main__":
     import sys
-<<<<<<< HEAD
     from application import *
-=======
-    sys.path.append('../')
-    from Application.application import *
->>>>>>> JABautista
     app = QtWidgets.QApplication(sys.argv)
     win = ShowWindow()
     win.Show_FirstWindow()

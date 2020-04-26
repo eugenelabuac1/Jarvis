@@ -5,11 +5,6 @@ import os
 import webbrowser
 import multiprocessing
 import time
-<<<<<<< HEAD
-=======
-from db import *
-sys.path.append('../')
->>>>>>> JABautista
 new = 2
 googleUrl="http://google.com/?#q="
 youtubeUrl="http://youtube.com/results?search_query="
@@ -48,10 +43,6 @@ def commands():
     if text[0:21] == "jarvis search youtube":
         p1=multiprocessing.Process(target=talk, args=('Okay, searching youtube for {}'.format(text[22:]), ))
         p2=multiprocessing.Process(target=webbrowser.open, args=(youtubeUrl+text[22:], 'new=new'))
-<<<<<<< HEAD
-=======
-        
->>>>>>> JABautista
         p1.start()
         p2.start()
         p1.join()

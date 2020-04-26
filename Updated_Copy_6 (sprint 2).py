@@ -1,26 +1,29 @@
-''' UI of Jarvis '''
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import win32com.client as wincl 
+import speech_recognition as sr
+import os
+import webbrowser
+import sqlite3
+import datetime
+new = 2
+tabUrl="http://google.com/?#q="
+speak = wincl.Dispatch("SAPI.SpVoice")
+conn = sqlite3.connect('test1.db')
+c = conn.cursor()
+c.execute("""CREATE TABLE IF NOT EXISTS history (action_type text, content text, date text)""")
 class Ui_Jarvis(object):
     def setupUi(self, Jarvis):
-          
-
         Jarvis.setObjectName("Jarvis")
-        Jarvis.setFixedSize(597, 600)
-        
-    
-        
+        Jarvis.resize(597, 502)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Jarvis.setWindowIcon(icon)
         Jarvis.setAutoFillBackground(False)
         Jarvis.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(Jarvis)
         self.centralwidget.setObjectName("centralwidget")
-
-        
         self.labelJarvis = QtWidgets.QLabel(self.centralwidget)
         self.labelJarvis.setGeometry(QtCore.QRect(0, 60, 591, 111))
         font = QtGui.QFont()
@@ -41,16 +44,17 @@ class Ui_Jarvis(object):
         self.labelJarvis.setObjectName("labelJarvis")
         
         #Input for Text to Speech
-        self.txtsp = QtWidgets.QLineEdit(self.centralwidget)
-        self.txtsp.setGeometry(QtCore.QRect(0, 530, 341, 71))
-        self.txtsp.setText("")
-        self.txtsp.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.txtsp.setObjectName("lineEdit")
+        self.txttspeech = QtWidgets.QTextEdit(self.centralwidget)
+        self.txttspeech.setGeometry(QtCore.QRect(0, 430, 351, 71))
+        self.txttspeech.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.txttspeech.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.txttspeech.setDocumentTitle("")
+        self.txttspeech.setObjectName("txttspeech")
         
         #Button for pushing Text
         self.pushText = QtWidgets.QPushButton(self.centralwidget)
         self.pushText.setEnabled(True)
-        self.pushText.setGeometry(QtCore.QRect(360, 530, 71, 71))
+        self.pushText.setGeometry(QtCore.QRect(360, 430, 71, 71))
         self.pushText.setAccessibleDescription("")
         self.pushText.setAutoFillBackground(False)
         self.pushText.setStyleSheet("QPushButton {\n"
@@ -84,7 +88,6 @@ class Ui_Jarvis(object):
         self.pushText.setFlat(True)
         self.pushText.setProperty("pixmap", QtGui.QPixmap("wicon.png"))
         self.pushText.setObjectName("pushText")
-        
         
         #Help Button
         self.pushHelp = QtWidgets.QPushButton(self.centralwidget)
@@ -130,11 +133,11 @@ class Ui_Jarvis(object):
         self.label_gif.setScaledContents(True)
         self.label_gif.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse)
         self.label_gif.setObjectName("label_gif")
-        self.label_gif.setMovie(wave)
-        wave.start()
+        
+        
         #Manual Mic
         self.pushMic = QtWidgets.QPushButton(self.centralwidget)
-        self.pushMic.setGeometry(QtCore.QRect(520, 530, 71, 71))
+        self.pushMic.setGeometry(QtCore.QRect(520, 430, 71, 71))
         self.pushMic.setStyleSheet("QPushButton {\n"
 "    color: #333;\n"
 "    \n"
@@ -167,7 +170,7 @@ class Ui_Jarvis(object):
         
         #Automatic Mic
         self.pushMic_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushMic_2.setGeometry(QtCore.QRect(440, 530, 71, 71))
+        self.pushMic_2.setGeometry(QtCore.QRect(440, 430, 71, 71))
         self.pushMic_2.setAutoFillBackground(False)
         self.pushMic_2.setStyleSheet("QPushButton {\n"
 "    color: #333;\n"
@@ -209,54 +212,29 @@ class Ui_Jarvis(object):
         
         #Manual Label
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(540, 520, 47, 13))
+        self.label_2.setGeometry(QtCore.QRect(540, 420, 47, 13))
         self.label_2.setObjectName("label_2")
         
         #Automatic Label
         self.label_A = QtWidgets.QLabel(self.centralwidget)
-        self.label_A.setGeometry(QtCore.QRect(450, 520, 47, 13))
+        self.label_A.setGeometry(QtCore.QRect(450, 420, 47, 13))
         self.label_A.setObjectName("label_A")
         Jarvis.setCentralWidget(self.centralwidget)
-
-
-        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setGeometry(QtCore.QRect(390, 370, 201, 121))
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 199, 119))
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.labelStatus= QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.labelStatus.setGeometry(QtCore.QRect(0, 0, 201, 121))
-        self.labelStatus.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-
-        self.labelStatus.setScaledContents(True)
-        self.labelStatus.setObjectName("labelStatus")
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        
-
-        
-        def Status():
-            inp = self.txtsp.text()
-            self.labelStatus.setText("\nYou typed: \n \n" + inp)
-            self.txtsp.setText("") 
-
-        
-        self.pushText.clicked.connect(Status)
 
         self.retranslateUi(Jarvis)
         QtCore.QMetaObject.connectSlotsByName(Jarvis)
     
         
-
-    
+        
        
+       
+        
+        
 
     def retranslateUi(self, Jarvis):
         _translate = QtCore.QCoreApplication.translate
         Jarvis.setWindowTitle(_translate("Jarvis", "Jarvis"))
-        self.txtsp.setPlaceholderText(_translate("MainWindow", "Please Input Text"))
-        
+        self.txttspeech.setPlaceholderText(_translate("Jarvis", "Please input text to convert to speech"))
         self.label_2.setText(_translate("Jarvis", "Manual"))
         self.label_A.setText(_translate("Jarvis", "Automatic"))
 
@@ -269,38 +247,19 @@ class Ui_Jarvis(object):
 class Ui_HelpWindow(object):
     def setupUi(self, HelpWindow):
         HelpWindow.setObjectName("HelpWindow")
-        HelpWindow.setFixedSize(632, 600)
+        HelpWindow.resize(495, 543)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         HelpWindow.setWindowIcon(icon)
         HelpWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(HelpWindow)
         self.centralwidget.setObjectName("centralwidget")
-        #Scroll Bar
-        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setGeometry(QtCore.QRect(-10, 0, 641, 601))
-        self.scrollArea.setAutoFillBackground(False)
-        self.scrollArea.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.scrollArea.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.scrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 622, 1417))
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        
-        #Instructions of jarvis
-        self.help = QtWidgets.QLabel(self.scrollAreaWidgetContents)
-        self.help.setText("")
-        self.help.setPixmap(QtGui.QPixmap("jarvis help.jpg"))
-        self.help.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
-        self.help.setObjectName("label")
-        self.verticalLayout.addWidget(self.help)
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 30, 491, 61))
+        font = QtGui.QFont()
+        font.setPointSize(40)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
         HelpWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(HelpWindow)
@@ -309,10 +268,23 @@ class Ui_HelpWindow(object):
     def retranslateUi(self, HelpWindow):
         _translate = QtCore.QCoreApplication.translate
         HelpWindow.setWindowTitle(_translate("HelpWindow", "Jarvis-Help"))
+        self.label.setText(_translate("HelpWindow", "How to use Jarvis"))
         
         
+class Ui_History(object):
+    def setupUi(self, History):
+        History.setObjectName("History")
+        History.resize(651, 590)
+        self.centralwidget = QtWidgets.QWidget(History)
+        self.centralwidget.setObjectName("centralwidget")
+        History.setCentralWidget(self.centralwidget)
 
-        
+        self.retranslateUi(History)
+        QtCore.QMetaObject.connectSlotsByName(History)
+
+    def retranslateUi(self, History):
+        _translate = QtCore.QCoreApplication.translate
+        History.setWindowTitle(_translate("History", "Jarvis-History"))
 
 class ShowWindow:
 
@@ -325,11 +297,143 @@ class ShowWindow:
         self.ui = Ui_Jarvis()
         self.ui.setupUi(self.Jarvis)
         self.ui.pushHelp.clicked.connect(self.Show_SecondWindow)
-        self.Jarvis.show()
+        
+        def Test():
+            r = sr.Recognizer()
+           
+            try:
+                with sr.Microphone() as source:
+                    r.adjust_for_ambient_noise(source)
+                    print("say something")
+                    audio = r.listen(source,timeout=3, phrase_time_limit=3)
+                text = r.recognize_google(audio)
+                print("You said : {}".format(text))
+                
+                if text[0:13] == "jarvis search":
+                    speak.speak("Searching {}".format(text[14:]))
+                    webbrowser.open(tabUrl+text[14:], new=new)
+                    add_history('search',text[14:])
+                                        
+                if text == "jarvis open notepad":
+                    speak.speak("Opening notepad")
+                    os.system("start notepad.exe")
+                    add_history('open', 'notepad')
+                    
+                if text == "jarvis open chrome":
+                    speak.speak("Opening chrome")
+                    os.system("start chrome.exe")
+                    add_history('open', 'chrome')
+                    
+                if text == "jarvis open word":
+                    speak.speak("Opening word")
+                    os.system("start WINWORD.exe")
+                    add_history('open', 'word')
+                
+                if text == "jarvis shutdown computer":
+                    speak.speak("Shutting down pc in 20 seconds.")
+                    #os.system("shutdown /s /t 20")
+                    print("shutdown")
+                    add_history('shutdown', '')
+                    
+                if text == "jarvis restart computer":
+                    speak.Speak("Restarting pc in 20 seconds.")
+                    #os.system("shutdown /r /t 20")
+                    print("restart")
+                    add_history('restart', '')
+                    
+                if text == "jarvis display history":
+                    speak.Speak("Displaying command history.")
+                    Show_ThirdWindow(self)
+                    show_history()
+                
+                if text == "jarvis clear history":
+                    speak.Speak("Deleting command history.")
+                    clear_history()
+                    show_history()
+                ##
+                if text == "jarvis display open":
+                    speak.Speak("Displaying history wherein action type is open.")
+                    Show_ThirdWindow(self)
+                    read_from_db_open()
+                    
+                if text == "jarvis display search":
+                    speak.Speak("Displaying history wherein action type is search.")
+                    Show_ThirdWindow(self)
+                    read_from_db_search()
+                    
+                if text == "jarvis display restart":
+                    speak.Speak("Displaying history wherein action type is restart.")
+                    Show_ThirdWindow(self)
+                    read_from_db_restart()
+                
+                if text == "jarvis display shutdown":
+                    speak.Speak("Displaying history wherein action type is shutdown.")
+                    self.Show_ThirdWindow.show()
+                    read_from_db_shutdown()
+                ##
+            except Exception as e:
+                print(e)
+                speak.Speak("Sorry I could not recognize what you said")
 
         #Functionality of the button
-        self.ui.pushMic.clicked.connect(commands)
-         
+        self.ui.pushMic.clicked.connect(Test)
+        def Show_ThirdWindow(self):
+            self.History = QtWidgets.QMainWindow()
+            self.ui = Ui_History()
+            self.ui.setupUi(self.History)
+            self.History.show()         
+            
+        def add_history(action_type,content):
+            currentDT = str(datetime.datetime.now()) 
+            c.execute("INSERT INTO history VALUES ('{}', '{}', '{}' )".format(action_type,content,currentDT[:16]))
+            conn.commit()
+            conn.close
+            
+        def show_history():
+            c.execute('SELECT * FROM history')
+            print(c.fetchall())
+        
+        def clear_history():
+            c.execute("DELETE from history")
+            conn.commit()
+            conn.close
+######
+        def create_table():
+            c.execute("CREATE TABLE IF NOT EXISTS Table01(datestamp REAL, command TEXT, action TEXT)")
+            c.execute("CREATE TABLE IF NOT EXISTS backupTable01(datestamp REAL, command TEXT, action TEXT)")
+        
+        def read_from_db_open():
+            c.execute("SELECT * FROM history WHERE action_type = 'open' ")
+            data = c.fetchall()
+            print(data)
+            for row in data:
+                print(row)
+
+        def read_from_db_search():
+            c.execute("SELECT * FROM history WHERE action_type = 'search' ")
+            data = c.fetchall()
+            print(data)
+            for row in data:
+                print(row)
+       
+        def read_from_db_restart():
+            c.execute("SELECT * FROM history WHERE action_type = 'restart' ")
+            data = c.fetchall()
+            print(data)
+            for row in data:
+                print(row) 
+            
+        def read_from_db_shutdown():
+            c.execute("SELECT * FROM history WHERE action_type = 'shutdown' ")
+            data = c.fetchall()
+            print(data)
+            for row in data:
+                print(row)                 
+            
+            conn.commit()
+            conn.close 
+        self.Jarvis.show()
+
     def Show_SecondWindow(self):
         
         self.HelpWindow = QtWidgets.QMainWindow()
@@ -337,60 +441,9 @@ class ShowWindow:
         self.ui.setupUi(self.HelpWindow)       
         self.HelpWindow.show()
         
-    def Show_ThirdWindow(self,action):
-        self.History = QtWidgets.QMainWindow()
-        self.ui = Ui_History()
-        self.ui.setupUi(self.History, action)
-        self.History.show()    
-    
-class Ui_History(object):
-    def setupUi(self, Ui_History,action):
-        Ui_History.setObjectName("Ui_History")
-        Ui_History.resize(800, 600)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        Ui_History.setWindowIcon(icon)        
-        self.centralwidget = QtWidgets.QWidget(Ui_History)
-        self.centralwidget.setObjectName("centralwidget")
-        self.dbTable = QtWidgets.QTableWidget(self.centralwidget)
-        self.dbTable.setGeometry(QtCore.QRect(10, 10, 781, 571))
-        self.dbTable.setGridStyle(QtCore.Qt.SolidLine)
-        self.dbTable.setColumnCount(3)
-        self.dbTable.setObjectName("dbTable")
-        header = self.dbTable.horizontalHeader()
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-        self.dbTable.setHorizontalHeaderLabels(("Command;Content;Date and Time").split(";"))
-        self.dbTable.horizontalHeader().setMinimumSectionSize(39)
-        Ui_History.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(Ui_History)
-        self.statusbar.setObjectName("statusbar")
-        Ui_History.setStatusBar(self.statusbar)
-        self.loadData(action)
-        self.retranslateUi(Ui_History)
-        QtCore.QMetaObject.connectSlotsByName(Ui_History)
-
-    def retranslateUi(self, Ui_History):
-        _translate = QtCore.QCoreApplication.translate
-        Ui_History.setWindowTitle(_translate("Ui_History", "History"))
-        
-    def loadData(self,action):
-        conn = sqlite3.connect('test1.db') 
-        query = action
-        result = conn.execute(query)
-        for row_number, row_data in enumerate(result):
-            self.dbTable.insertRow(row_number)  
-            for column_number, data in enumerate(row_data):
-                self.dbTable.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
-        conn.close()   
 
 if __name__ == "__main__":
     import sys
-<<<<<<< HEAD
-    from application import *
-=======
-    sys.path.append('../')
-    from Application.application import *
->>>>>>> JABautista
     app = QtWidgets.QApplication(sys.argv)
     win = ShowWindow()
     win.Show_FirstWindow()
