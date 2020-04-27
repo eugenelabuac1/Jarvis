@@ -385,14 +385,9 @@ class Ui_History(object):
 
 if __name__ == "__main__":
     import sys
-<<<<<<< HEAD
-    from application import *
-=======
     sys.path.append('../')
     from Application.application import *
->>>>>>> JABautista
     app = QtWidgets.QApplication(sys.argv)
     win = ShowWindow()
     win.Show_FirstWindow()
     sys.exit(app.exec_())
-
