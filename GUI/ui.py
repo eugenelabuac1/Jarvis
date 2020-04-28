@@ -134,7 +134,7 @@ class Ui_Jarvis(object):
         wave.start()
         #Manual Mic
         self.pushMic = QtWidgets.QPushButton(self.centralwidget)
-        self.pushMic.setGeometry(QtCore.QRect(520, 530, 71, 71))
+        self.pushMic.setGeometry(QtCore.QRect(460,530, 71, 71))
         self.pushMic.setStyleSheet("QPushButton {\n"
 "    color: #333;\n"
 "    \n"
@@ -165,57 +165,10 @@ class Ui_Jarvis(object):
         self.pushMic.setIconSize(QtCore.QSize(60, 60))
         self.pushMic.setObjectName("pushMic")
         
-        #Automatic Mic
-        self.pushMic_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushMic_2.setGeometry(QtCore.QRect(440, 530, 71, 71))
-        self.pushMic_2.setAutoFillBackground(False)
-        self.pushMic_2.setStyleSheet("QPushButton {\n"
-"    color: #333;\n"
-"    \n"
-"    border-radius: 20px;\n"
-"    border-style: outset;\n"
-"   \n"
-"    padding: 5px;\n"
-"    }\n"
-"\n"
-"QPushButton:hover {\n"
-"    background: qradialgradient(\n"
-"        cx: 0.3, cy: -0.3, fx: 0.3, fy: -0.3,\n"
-"        radius: 1.35, stop: 0 #fff, stop: 1 #bbb\n"
-"        );\n"
-"    }\n"
-"\n"
-"QPushButton:pressed {\n"
-"    border-style: inset;\n"
-"    background: qradialgradient(\n"
-"        cx: 0.4, cy: -0.4, fx: 0.4, fy: -0.4,\n"
-"        radius: 1.35, stop: 0 #fff, stop: 1 #ddd\n"
-"        );\n"
-"    }")
-        self.pushMic_2.setText("")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("blue.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushMic_2.setIcon(icon4)
-        self.pushMic_2.setIconSize(QtCore.QSize(50, 50))
-        self.pushMic_2.setCheckable(True)
-        self.pushMic_2.setChecked(False)
-        self.pushMic_2.setAutoRepeat(False)
-        self.pushMic_2.setAutoExclusive(False)
-        self.pushMic_2.setAutoRepeatDelay(300)
-        self.pushMic_2.setAutoRepeatInterval(100)
-        self.pushMic_2.setDefault(False)
-        self.pushMic_2.setFlat(False)
-        self.pushMic_2.setObjectName("pushMic_2")
+       
+
         
-        #Manual Label
-        self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(540, 520, 47, 13))
-        self.label_2.setObjectName("label_2")
-        
-        #Automatic Label
-        self.label_A = QtWidgets.QLabel(self.centralwidget)
-        self.label_A.setGeometry(QtCore.QRect(450, 520, 47, 13))
-        self.label_A.setObjectName("label_A")
+      
         Jarvis.setCentralWidget(self.centralwidget)
 
 
@@ -234,7 +187,6 @@ class Ui_Jarvis(object):
         self.labelStatus.setObjectName("labelStatus")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         
-
         
         def Status():
             inp = self.txtsp.text()
@@ -257,8 +209,8 @@ class Ui_Jarvis(object):
         Jarvis.setWindowTitle(_translate("Jarvis", "Jarvis"))
         self.txtsp.setPlaceholderText(_translate("MainWindow", "Please Input Text"))
         
-        self.label_2.setText(_translate("Jarvis", "Manual"))
-        self.label_A.setText(_translate("Jarvis", "Automatic"))
+      
+    
 
 
 
