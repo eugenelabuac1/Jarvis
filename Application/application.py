@@ -4,12 +4,15 @@ import os
 import webbrowser
 import multiprocessing
 import sys
+import requests
 sys.path.append('../')
 from Database.db import *
 from GUI.hist import *
 
 
 new = 2
+key = 'dcOhstTfDgJNCtoYDq9pApoS0F4cclnoSBi8hSztLyg'
+ifttUrl = "https://maker.ifttt.com/trigger/trial/with/key/{}".format(key)
 googleUrl="http://google.com/?#q="
 youtubeUrl="http://youtube.com/results?search_query="
 
@@ -54,6 +57,13 @@ def commands(text):
         p1.join()
         p2.join()
         add_history("search", "youtube")
+        
+    if text[0:12] == "jarvis tweet":
+        p1=multiprocessing.Process(target=talk, args=('Okay, tweeting {}'.format(text[13:]), ))
+        response = {"value1":text[13:]}
+        requests.post(ifttUrl, data=response)
+        p1.start()
+        p1.join()
         
     if text == "jarvis open notepad":
         p1=multiprocessing.Process(target=talk, args=('Opening notepad', ))
