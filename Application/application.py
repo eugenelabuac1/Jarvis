@@ -136,25 +136,25 @@ def commands(text):
     if text == "jarvis display open":
         talk("Displaying history wherein action type is open.")
         action = "SELECT * FROM history WHERE action_type = 'open' "
-        #hist.Show_ThirdWindow(action)
+        passAction(action)
         read_from_db_open()
     
     if text == "jarvis display search":
         talk("Displaying history wherein action type is search.")
         action = "SELECT * FROM history WHERE action_type = 'search' "
-        #hist.Show_ThirdWindow(action)
+        passAction(action)
         read_from_db_search()
         
     if text == "jarvis display restart":
         talk("Displaying history wherein action type is restart.")
         action = "SELECT * FROM history WHERE action_type = 'restart' "
-        #hist.Show_ThirdWindow(action)
+        passAction(action)
         read_from_db_restart()
     
     if text == "jarvis display shutdown":
         talk("Displaying history wherein action type is shutdown.")
         action = "SELECT * FROM history WHERE action_type = 'shutdown' "
-        #hist.Show_ThirdWindow(action)
+        passAction(action)
         read_from_db_shutdown()
         
 
