@@ -2,6 +2,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 class Ui_Jarvis(object):
     def setupUi(self, Jarvis):
           
@@ -38,6 +39,51 @@ class Ui_Jarvis(object):
         self.labelJarvis.setOpenExternalLinks(False)
         self.labelJarvis.setProperty("icon", QtGui.QPixmap("JARVIS.png"))
         self.labelJarvis.setObjectName("labelJarvis")
+        
+        #Input for Text to Speech
+        self.txtsp = QtWidgets.QLineEdit(self.centralwidget)
+        self.txtsp.setGeometry(QtCore.QRect(0, 530, 341, 71))
+        self.txtsp.setText("")
+        self.txtsp.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.txtsp.setObjectName("lineEdit")
+        
+        #Button for pushing Text
+        self.pushText = QtWidgets.QPushButton(self.centralwidget)
+        self.pushText.setEnabled(True)
+        self.pushText.setGeometry(QtCore.QRect(360, 530, 71, 71))
+        self.pushText.setAccessibleDescription("")
+        self.pushText.setAutoFillBackground(False)
+        self.pushText.setStyleSheet("QPushButton {\n"
+"    color: #333;\n"
+"    \n"
+"    border-radius: 20px;\n"
+"    border-style: outset;\n"
+"   \n"
+"    padding: 5px;\n"
+"    }\n"
+"\n"
+"QPushButton:hover {\n"
+"    background: qradialgradient(\n"
+"        cx: 0.3, cy: -0.3, fx: 0.3, fy: -0.3,\n"
+"        radius: 1.35, stop: 0 #fff, stop: 1 #bbb\n"
+"        );\n"
+"    }\n"
+"\n"
+"QPushButton:pressed {\n"
+"    border-style: inset;\n"
+"    background: qradialgradient(\n"
+"        cx: 0.4, cy: -0.4, fx: 0.4, fy: -0.4,\n"
+"        radius: 1.35, stop: 0 #fff, stop: 1 #ddd\n"
+"        );\n"
+"    }")
+        self.pushText.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("wicon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushText.setIcon(icon1)
+        self.pushText.setIconSize(QtCore.QSize(60, 60))
+        self.pushText.setFlat(True)
+        self.pushText.setProperty("pixmap", QtGui.QPixmap("wicon.png"))
+        self.pushText.setObjectName("pushText")
         
         
         #Help Button
@@ -88,7 +134,7 @@ class Ui_Jarvis(object):
         wave.start()
         #Manual Mic
         self.pushMic = QtWidgets.QPushButton(self.centralwidget)
-        self.pushMic.setGeometry(QtCore.QRect(260, 530, 71, 71))
+        self.pushMic.setGeometry(QtCore.QRect(460,530, 71, 71))
         self.pushMic.setStyleSheet("QPushButton {\n"
 "    color: #333;\n"
 "    \n"
@@ -114,20 +160,20 @@ class Ui_Jarvis(object):
 "    }")
         self.pushMic.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("blue.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("mic2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushMic.setIcon(icon3)
         self.pushMic.setIconSize(QtCore.QSize(60, 60))
         self.pushMic.setObjectName("pushMic")
         
        
+
         
-        
-        
+      
         Jarvis.setCentralWidget(self.centralwidget)
 
 
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
-        self.scrollArea.setGeometry(QtCore.QRect(200, 390, 201, 121))
+        self.scrollArea.setGeometry(QtCore.QRect(390, 370, 201, 121))
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
@@ -140,15 +186,19 @@ class Ui_Jarvis(object):
         self.labelStatus.setScaledContents(True)
         self.labelStatus.setObjectName("labelStatus")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        
+        
+        def Status():
+            inp = self.txtsp.text()
+            self.labelStatus.setText("\nYou typed: \n \n" + inp)
+            self.txtsp.setText("") 
+            commands(inp)
 
-        
-        
+        self.pushText.clicked.connect(Status)
 
         self.retranslateUi(Jarvis)
         QtCore.QMetaObject.connectSlotsByName(Jarvis)
-        
-      
-            
+    
         
 
     
@@ -157,7 +207,10 @@ class Ui_Jarvis(object):
     def retranslateUi(self, Jarvis):
         _translate = QtCore.QCoreApplication.translate
         Jarvis.setWindowTitle(_translate("Jarvis", "Jarvis"))
-       
+        self.txtsp.setPlaceholderText(_translate("MainWindow", "Please Input Text"))
+        
+      
+    
 
 
 
@@ -227,7 +280,8 @@ class ShowWindow:
         self.Jarvis.show()
 
         #Functionality of the button
-        self.ui.pushMic.clicked.connect(commands)
+        text=""
+        self.ui.pushMic.clicked.connect(lambda: recognize(text))
          
     def Show_SecondWindow(self):
         
@@ -236,57 +290,12 @@ class ShowWindow:
         self.ui.setupUi(self.HelpWindow)       
         self.HelpWindow.show()
         
-    def Show_ThirdWindow(self,action):
-        self.History = QtWidgets.QMainWindow()
-        self.ui = Ui_History()
-        self.ui.setupUi(self.History, action)
-        self.History.show()    
-    
-class Ui_History(object):
-    def setupUi(self, Ui_History,action):
-        Ui_History.setObjectName("Ui_History")
-        Ui_History.resize(800, 600)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        Ui_History.setWindowIcon(icon)        
-        self.centralwidget = QtWidgets.QWidget(Ui_History)
-        self.centralwidget.setObjectName("centralwidget")
-        self.dbTable = QtWidgets.QTableWidget(self.centralwidget)
-        self.dbTable.setGeometry(QtCore.QRect(10, 10, 781, 571))
-        self.dbTable.setGridStyle(QtCore.Qt.SolidLine)
-        self.dbTable.setColumnCount(3)
-        self.dbTable.setObjectName("dbTable")
-        header = self.dbTable.horizontalHeader()
-        header.setSectionResizeMode(1, QtWidgets.QHeaderView.ResizeToContents)
-        self.dbTable.setHorizontalHeaderLabels(("Command;Content;Date and Time").split(";"))
-        self.dbTable.horizontalHeader().setMinimumSectionSize(39)
-        Ui_History.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(Ui_History)
-        self.statusbar.setObjectName("statusbar")
-        Ui_History.setStatusBar(self.statusbar)
-        self.loadData(action)
-        self.retranslateUi(Ui_History)
-        QtCore.QMetaObject.connectSlotsByName(Ui_History)
-
-    def retranslateUi(self, Ui_History):
-        _translate = QtCore.QCoreApplication.translate
-        Ui_History.setWindowTitle(_translate("Ui_History", "History"))
-        
-    def loadData(self,action):
-        conn = sqlite3.connect('test1.db') 
-        query = action
-        result = conn.execute(query)
-        for row_number, row_data in enumerate(result):
-            self.dbTable.insertRow(row_number)  
-            for column_number, data in enumerate(row_data):
-                self.dbTable.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
-        conn.close()   
 
 if __name__ == "__main__":
     import sys
-    from application import *
+    sys.path.append('../')
+    from Application.application import *
     app = QtWidgets.QApplication(sys.argv)
     win = ShowWindow()
     win.Show_FirstWindow()
     sys.exit(app.exec_())
-
