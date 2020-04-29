@@ -63,6 +63,7 @@ def commands(text):
         requests.post(ifttUrl, data=response)
         p1.start()
         p1.join()
+        add_history('tweet',text[14:])
         
     if text == "jarvis open notepad":
         p1=multiprocessing.Process(target=talk, args=('Opening notepad', ))
@@ -194,8 +195,8 @@ def commands(text):
 #
 
     if text == "jarvis display history":
-        action = "SELECT * FROM history"
         talk("Displaying command history")
+        action = "SELECT * FROM history"
         passAction(action)
         show_history()
         
@@ -229,6 +230,24 @@ def commands(text):
         action = "SELECT * FROM history WHERE action_type = 'shutdown' "
         passAction(action)
         read_from_db_shutdown()
+#     
+    if text == "jarvis display sleep":
+        talk("Displaying history wherein action type is sleep.")
+        action = "SELECT * FROM history WHERE action_type = 'sleep' "
+        passAction(action)
+        read_from_db_sleep()
+        
+    if text == "jarvis display lock":
+        talk("Displaying history wherein action type is lock.")
+        action = "SELECT * FROM history WHERE action_type = 'lock' "
+        passAction(action)
+        read_from_db_lock()
+        
+    if text == "jarvis display tweet":
+        talk("Displaying history wherein action type is tweet.")
+        action = "SELECT * FROM history WHERE action_type = 'tweet' "
+        passAction(action)
+        read_from_db_tweet()
         
 def passAction(action):
     gui = ShowWindow3
