@@ -4,12 +4,14 @@ import os
 import webbrowser
 import multiprocessing
 import sys
+import requests
 sys.path.append('../')
 from Database.db import *
 from GUI.hist import *
 
-
 new = 2
+key = 'dcOhstTfDgJNCtoYDq9pApoS0F4cclnoSBi8hSztLyg'
+ifttUrl = "https://maker.ifttt.com/trigger/trial/with/key/{}".format(key)
 googleUrl="http://google.com/?#q="
 youtubeUrl="http://youtube.com/results?search_query="
 
@@ -55,6 +57,14 @@ def commands(text):
         p2.join()
         add_history("search", "youtube")
         
+    if text[0:12] == "jarvis tweet":
+        p1=multiprocessing.Process(target=talk, args=('Okay, tweeting {}'.format(text[13:]), ))
+        response = {"value1":text[13:]}
+        requests.post(ifttUrl, data=response)
+        p1.start()
+        p1.join()
+        add_history('tweet',text[14:])
+        
     if text == "jarvis open notepad":
         p1=multiprocessing.Process(target=talk, args=('Opening notepad', ))
         p2=multiprocessing.Process(target=os.system, args=('start notepad.exe', ))
@@ -99,7 +109,71 @@ def commands(text):
         p1.join()
         p2.join()
         add_history('open', 'powerpoint')
-                
+        
+    if text == "jarvis open onenote":
+        p1=multiprocessing.Process(target=talk, args=('Opening onenote', ))
+        p2=multiprocessing.Process(target=os.system, args=('start ONENOTE.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open', 'onenote')
+    
+    if text == "jarvis open outlook":
+        p1=multiprocessing.Process(target=talk, args=('Opening outlook', ))
+        p2=multiprocessing.Process(target=os.system, args=('start OUTLOOK.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open', 'outlook')
+        
+    if text == "jarvis open matlab":
+        p1=multiprocessing.Process(target=talk, args=('Opening matlab', ))
+        p2=multiprocessing.Process(target=os.system, args=('start matlab.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open', 'matlab')
+    
+    if text == "jarvis open file explorer":
+        p1=multiprocessing.Process(target=talk, args=('Opening file explorer', ))
+        p2=multiprocessing.Process(target=os.system, args=('start explorer.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open', 'file explorer')
+        
+    if text == "jarvis open command prompt":
+        p1=multiprocessing.Process(target=talk, args=('Opening command prompt', ))
+        p2=multiprocessing.Process(target=os.system, args=('start cmd.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open','prompt')
+    
+    if text == "jarvis lock computer":
+        p1=multiprocessing.Process(target=talk, args=('Locking computer', ))
+        p2=multiprocessing.Process(target=os.system, args=('rundll32.exe user32.dll,LockWorkStation', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('lock','')
+        
+        
+    if text == "jarvis sleep":
+        p1=multiprocessing.Process(target=talk, args=('Sleeping', ))
+        p2=multiprocessing.Process(target=os.system, args=('RUNDLL32.EXE powrprof.dll,SetSuspendState 0,1,0', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('sleep', '')
+        
     if text == "jarvis shutdown computer":
         p1=multiprocessing.Process(target=talk, args=('Shutting down computer in 20 seconds', ))
         p2=multiprocessing.Process(target=os.system, args=('shutdown /s /t 20', ))
@@ -117,12 +191,12 @@ def commands(text):
         p1.join()
         p2.join()
         add_history('restart', '')
-
+        
 #
 
     if text == "jarvis display history":
-        action = "SELECT * FROM history"
         talk("Displaying command history")
+        action = "SELECT * FROM history"
         passAction(action)
         show_history()
         
@@ -156,9 +230,25 @@ def commands(text):
         action = "SELECT * FROM history WHERE action_type = 'shutdown' "
         passAction(action)
         read_from_db_shutdown()
+#     
+    if text == "jarvis display sleep":
+        talk("Displaying history wherein action type is sleep.")
+        action = "SELECT * FROM history WHERE action_type = 'sleep' "
+        passAction(action)
+        read_from_db_sleep()
         
-
-
+    if text == "jarvis display lock":
+        talk("Displaying history wherein action type is lock.")
+        action = "SELECT * FROM history WHERE action_type = 'lock' "
+        passAction(action)
+        read_from_db_lock()
+        
+    if text == "jarvis display tweet":
+        talk("Displaying history wherein action type is tweet.")
+        action = "SELECT * FROM history WHERE action_type = 'tweet' "
+        passAction(action)
+        read_from_db_tweet()
+        
 def passAction(action):
     gui = ShowWindow3
     gui.action = action
