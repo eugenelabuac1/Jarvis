@@ -57,7 +57,28 @@ def read_from_db_shutdown():
     data = c.fetchall()
     print(data)
     for row in data:
-        print(row)                 
+        print(row)     
+        
+def read_from_db_sleep():
+    c.execute("SELECT * FROM history WHERE action_type = 'sleep' ")
+    data = c.fetchall()
+    print(data)
+    for row in data:
+        print(row)    
+
+def read_from_db_lock():
+    c.execute("SELECT * FROM history WHERE action_type = 'lock' ")
+    data = c.fetchall()
+    print(data)
+    for row in data:
+        print(row) 
+
+def read_from_db_tweet():
+    c.execute("SELECT * FROM history WHERE action_type = 'tweet' ")
+    data = c.fetchall()
+    print(data)
+    for row in data:
+        print(row)               
         
 conn.commit()
 conn.close
