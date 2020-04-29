@@ -9,7 +9,6 @@ sys.path.append('../')
 from Database.db import *
 from GUI.hist import *
 
-
 new = 2
 key = 'dcOhstTfDgJNCtoYDq9pApoS0F4cclnoSBi8hSztLyg'
 ifttUrl = "https://maker.ifttt.com/trigger/trial/with/key/{}".format(key)
@@ -109,7 +108,71 @@ def commands(text):
         p1.join()
         p2.join()
         add_history('open', 'powerpoint')
-                
+        
+    if text == "jarvis open onenote":
+        p1=multiprocessing.Process(target=talk, args=('Opening onenote', ))
+        p2=multiprocessing.Process(target=os.system, args=('start ONENOTE.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open', 'onenote')
+    
+    if text == "jarvis open outlook":
+        p1=multiprocessing.Process(target=talk, args=('Opening outlook', ))
+        p2=multiprocessing.Process(target=os.system, args=('start OUTLOOK.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open', 'outlook')
+        
+    if text == "jarvis open matlab":
+        p1=multiprocessing.Process(target=talk, args=('Opening matlab', ))
+        p2=multiprocessing.Process(target=os.system, args=('start matlab.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open', 'matlab')
+    
+    if text == "jarvis open file explorer":
+        p1=multiprocessing.Process(target=talk, args=('Opening file explorer', ))
+        p2=multiprocessing.Process(target=os.system, args=('start explorer.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open', 'file explorer')
+        
+    if text == "jarvis open command prompt":
+        p1=multiprocessing.Process(target=talk, args=('Opening command prompt', ))
+        p2=multiprocessing.Process(target=os.system, args=('start cmd.exe', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('open','prompt')
+    
+    if text == "jarvis lock computer":
+        p1=multiprocessing.Process(target=talk, args=('Locking computer', ))
+        p2=multiprocessing.Process(target=os.system, args=('rundll32.exe user32.dll,LockWorkStation', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('lock','')
+        
+        
+    if text == "jarvis sleep":
+        p1=multiprocessing.Process(target=talk, args=('Sleeping', ))
+        p2=multiprocessing.Process(target=os.system, args=('RUNDLL32.EXE powrprof.dll,SetSuspendState 0,1,0', ))
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
+        add_history('sleep', '')
+        
     if text == "jarvis shutdown computer":
         p1=multiprocessing.Process(target=talk, args=('Shutting down computer in 20 seconds', ))
         p2=multiprocessing.Process(target=os.system, args=('shutdown /s /t 20', ))
@@ -127,7 +190,7 @@ def commands(text):
         p1.join()
         p2.join()
         add_history('restart', '')
-
+        
 #
 
     if text == "jarvis display history":
@@ -167,8 +230,6 @@ def commands(text):
         passAction(action)
         read_from_db_shutdown()
         
-
-
 def passAction(action):
     gui = ShowWindow3
     gui.action = action
