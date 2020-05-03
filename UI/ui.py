@@ -15,7 +15,7 @@ class Ui_Jarvis(object):
     
         
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("GUI\logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("UI\logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Jarvis.setWindowIcon(icon)
         Jarvis.setAutoFillBackground(False)
         Jarvis.setStyleSheet("background-color: rgb(255, 255, 255);")
@@ -214,7 +214,6 @@ class Ui_Jarvis(object):
          
         
         
-#Another class for the ui of the help window       
 class Ui_HelpWindow(object):
     def setupUi(self, HelpWindow):
         HelpWindow.setObjectName("HelpWindow")
@@ -259,7 +258,6 @@ class Ui_HelpWindow(object):
         _translate = QtCore.QCoreApplication.translate
         HelpWindow.setWindowTitle(_translate("HelpWindow", "Jarvis-Help"))
         
-        
 
         
 
@@ -285,4 +283,3 @@ class ShowWindow:
         self.ui.setupUi(self.HelpWindow)       
         self.HelpWindow.show()
         
-
