@@ -31,6 +31,10 @@ class Ui_History(object):
         self.centralwidget = QtWidgets.QWidget(Ui_History)
         self.centralwidget.setObjectName("centralwidget")
         
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("UI\logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Ui_History.setWindowIcon(icon)
+        
         #scroll bar
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea.setGeometry(QtCore.QRect(-10, 0, 430, 430))
