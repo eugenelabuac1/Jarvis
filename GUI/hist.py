@@ -28,6 +28,9 @@ class Ui_History(object):
     def setupUi(self, Ui_History, action):
         Ui_History.setObjectName("Ui_History")
         Ui_History.resize(800, 600)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("GUI\logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Ui_History.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(Ui_History)
         self.centralwidget.setObjectName("centralwidget")
         self.dbTable = QtWidgets.QTableWidget(self.centralwidget)
