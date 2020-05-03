@@ -26,15 +26,17 @@ def recognize(text):
         try:
             with sr.Microphone() as source:
                 print("say something")
+                talk("Say something")
                 r.adjust_for_ambient_noise(source)
-                audio = r.listen(source,timeout=10, phrase_time_limit=6)
+                audio = r.listen(source,timeout=10, phrase_time_limit=15)
         
             text = r.recognize_google(audio)
-            print("You said : {}".format(text))
-    
+            p2=multiprocessing.Process(target=talk, args=("You said : {}".format(text), ))
+            p2.start()
+            p2.join()
         except Exception as e:
             print(e)
-            talk(e) 
+            talk("Please try again")
         commands(text)
     else:
         commands('{}'.format(text))
@@ -226,7 +228,7 @@ def commands(text):
             action = "SELECT * FROM history WHERE action_type = " +"'" +text[15:]+"'"
             passAction(action)
             show_history()
-
+    
         
 def passAction(action):
     gui = ShowWindow3
