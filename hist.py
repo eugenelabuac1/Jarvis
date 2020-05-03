@@ -7,9 +7,9 @@
 # WARNING! All changes made in this file will be lost!
 import sys
 sys.path.append('../')
-from Application.application import *
+from BLL.application import *
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Database.db import *
+from DAL.db import *
 
 class ShowWindow3:
 
@@ -27,14 +27,35 @@ class ShowWindow3:
 class Ui_History(object):
     def setupUi(self, Ui_History, action):
         Ui_History.setObjectName("Ui_History")
-        Ui_History.resize(800, 600)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("GUI\logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        Ui_History.setWindowIcon(icon)
+        Ui_History.resize(380, 380)
         self.centralwidget = QtWidgets.QWidget(Ui_History)
         self.centralwidget.setObjectName("centralwidget")
+        
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("UI\logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Ui_History.setWindowIcon(icon)
+        
+        #scroll bar
+        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
+        self.scrollArea.setGeometry(QtCore.QRect(-10, 0, 430, 430))
+        self.scrollArea.setAutoFillBackground(False)
+        self.scrollArea.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.scrollArea.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.scrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 450, 450))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        
+        #setting up dbTable
+
         self.dbTable = QtWidgets.QTableWidget(self.centralwidget)
-        self.dbTable.setGeometry(QtCore.QRect(10, 10, 781, 571))
+        self.dbTable.setGeometry(QtCore.QRect(10, 10, 370, 350))
         self.dbTable.setGridStyle(QtCore.Qt.SolidLine)
         self.dbTable.setColumnCount(3)
         self.dbTable.setObjectName("dbTable")
@@ -55,11 +76,12 @@ class Ui_History(object):
         Ui_History.setWindowTitle(_translate("Ui_History", "History"))
         
     def loadData(self,action):
-        conn = sqlite3.connect('JarvisDatabase.db') 
-        query = action
-        result = conn.execute(query)
+        conn = sqlite3.connect('DAL\JarvisDatabase.db') 
+        result = conn.execute(action)
         for row_number, row_data in enumerate(result):
             self.dbTable.insertRow(row_number)  
             for column_number, data in enumerate(row_data):
                 self.dbTable.setItem(row_number, column_number, QtWidgets.QTableWidgetItem(str(data)))
-        conn.close() 
+
+        conn.close()
+        
