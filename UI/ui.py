@@ -3,7 +3,7 @@
 import sys
 sys.path.append('../')
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Application.application import *
+from BLL.application import *
 
 class Ui_Jarvis(object):
     def setupUi(self, Jarvis):
@@ -36,10 +36,10 @@ class Ui_Jarvis(object):
         self.labelJarvis.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.labelJarvis.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.labelJarvis.setText("")
-        self.labelJarvis.setPixmap(QtGui.QPixmap("GUI\JARVIS.png"))
+        self.labelJarvis.setPixmap(QtGui.QPixmap("UI\JARVIS.png"))
         self.labelJarvis.setScaledContents(True)
         self.labelJarvis.setOpenExternalLinks(False)
-        self.labelJarvis.setProperty("icon", QtGui.QPixmap("GUI\JARVIS.png"))
+        self.labelJarvis.setProperty("icon", QtGui.QPixmap("UI\JARVIS.png"))
         self.labelJarvis.setObjectName("labelJarvis")
         
         #Input for Text to Speech
@@ -80,11 +80,11 @@ class Ui_Jarvis(object):
 "    }")
         self.pushText.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("GUI\wicon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("UI\wicon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushText.setIcon(icon1)
         self.pushText.setIconSize(QtCore.QSize(60, 60))
         self.pushText.setFlat(True)
-        self.pushText.setProperty("pixmap", QtGui.QPixmap("GUI\wicon.png"))
+        self.pushText.setProperty("pixmap", QtGui.QPixmap("UI\wicon.png"))
         self.pushText.setObjectName("pushText")
         
         
@@ -116,14 +116,14 @@ class Ui_Jarvis(object):
 "    }")
         self.pushHelp.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("GUI\helpp.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("UI\helpp.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushHelp.setIcon(icon2)
         self.pushHelp.setIconSize(QtCore.QSize(40, 40))
         self.pushHelp.setFlat(True)
         self.pushHelp.setObjectName("pushHelp")
         
         #Wave gif
-        wave = QtGui.QMovie("GUI\wave1.gif")
+        wave = QtGui.QMovie("UI\wave1.gif")
         
         self.label_gif = QtWidgets.QLabel(self.centralwidget)
         self.label_gif.setEnabled(True)
@@ -162,7 +162,7 @@ class Ui_Jarvis(object):
 "    }")
         self.pushMic.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("GUI\mic2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("UI\mic2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushMic.setIcon(icon3)
         self.pushMic.setIconSize(QtCore.QSize(60, 60))
         self.pushMic.setObjectName("pushMic")
@@ -211,12 +211,7 @@ class Ui_Jarvis(object):
         Jarvis.setWindowTitle(_translate("Jarvis", "Jarvis"))
         self.txtsp.setPlaceholderText(_translate("MainWindow", "Please Input Text"))
         
-      
-    
-
-
-
-        
+         
         
         
 #Another class for the ui of the help window       
@@ -225,7 +220,7 @@ class Ui_HelpWindow(object):
         HelpWindow.setObjectName("HelpWindow")
         HelpWindow.setFixedSize(632, 600)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("GUI\logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("UI\logo.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         HelpWindow.setWindowIcon(icon)
         HelpWindow.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.centralwidget = QtWidgets.QWidget(HelpWindow)
@@ -250,7 +245,7 @@ class Ui_HelpWindow(object):
         #Instructions of jarvis
         self.help = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.help.setText("")
-        self.help.setPixmap(QtGui.QPixmap("GUI\jarvis help.jpg"))
+        self.help.setPixmap(QtGui.QPixmap("UI\jarvis help.jpg"))
         self.help.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.help.setObjectName("label")
         self.verticalLayout.addWidget(self.help)
@@ -280,8 +275,6 @@ class ShowWindow:
         self.ui.setupUi(self.Jarvis)
         self.ui.pushHelp.clicked.connect(self.Show_SecondWindow)
         self.Jarvis.show()
-
-        #Functionality of the button
         text=""
         self.ui.pushMic.clicked.connect(lambda: recognize(text))
          

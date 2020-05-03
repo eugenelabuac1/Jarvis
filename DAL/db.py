@@ -7,7 +7,7 @@ Created on Thu Apr 23 22:08:17 2020
 import sqlite3
 import datetime
 
-conn = sqlite3.connect('JarvisDatabase.db')
+conn = sqlite3.connect('DAL\JarvisDatabase.db')
 c = conn.cursor()
 c.execute("""CREATE TABLE IF NOT EXISTS history (action_type text, content text, date text)""")
 

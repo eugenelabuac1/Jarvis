@@ -1,5 +1,5 @@
 if __name__ == "__main__":
-    from GUI.ui import *
+    from UI.ui import *
     import sys
     app = QtWidgets.QApplication(sys.argv)
     win = ShowWindow()
