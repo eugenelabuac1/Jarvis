@@ -244,7 +244,7 @@ class Ui_HelpWindow(object):
         #Instructions of jarvis
         self.help = QtWidgets.QLabel(self.scrollAreaWidgetContents)
         self.help.setText("")
-        self.help.setPixmap(QtGui.QPixmap("UI\jarvis help.jpg"))
+        self.help.setPixmap(QtGui.QPixmap("UI\jarvishelp.jpg"))
         self.help.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.help.setObjectName("label")
         self.verticalLayout.addWidget(self.help)
