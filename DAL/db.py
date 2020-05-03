@@ -19,8 +19,7 @@ def add_history(action_type,content):
             
 def show_history():
     c.execute('SELECT * FROM history')
-    print(c.fetchall())
-    
+
 
 def clear_history():
     c.execute("DELETE from history")
@@ -34,49 +33,42 @@ def create_table():
 def read_from_db_open():
     c.execute("SELECT * FROM history WHERE action_type = 'open' ")
     data = c.fetchall()
-    print(data)
     for row in data:
         print(row)
 
 def read_from_db_search():
     c.execute("SELECT * FROM history WHERE action_type = 'search' ")
     data = c.fetchall()
-    print(data)
     for row in data:
         print(row)
        
 def read_from_db_restart():
     c.execute("SELECT * FROM history WHERE action_type = 'restart' ")
     data = c.fetchall()
-    print(data)
     for row in data:
         print(row) 
             
 def read_from_db_shutdown():
     c.execute("SELECT * FROM history WHERE action_type = 'shutdown' ")
     data = c.fetchall()
-    print(data)
     for row in data:
         print(row)     
         
 def read_from_db_sleep():
     c.execute("SELECT * FROM history WHERE action_type = 'sleep' ")
     data = c.fetchall()
-    print(data)
     for row in data:
         print(row)    
 
 def read_from_db_lock():
     c.execute("SELECT * FROM history WHERE action_type = 'lock' ")
     data = c.fetchall()
-    print(data)
     for row in data:
         print(row) 
 
 def read_from_db_tweet():
     c.execute("SELECT * FROM history WHERE action_type = 'tweet' ")
     data = c.fetchall()
-    print(data)
     for row in data:
         print(row)               
         

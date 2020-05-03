@@ -27,11 +27,31 @@ class ShowWindow3:
 class Ui_History(object):
     def setupUi(self, Ui_History, action):
         Ui_History.setObjectName("Ui_History")
-        Ui_History.resize(400, 300)
+        Ui_History.resize(380, 380)
         self.centralwidget = QtWidgets.QWidget(Ui_History)
         self.centralwidget.setObjectName("centralwidget")
+        
+        #scroll bar
+        self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
+        self.scrollArea.setGeometry(QtCore.QRect(-10, 0, 430, 430))
+        self.scrollArea.setAutoFillBackground(False)
+        self.scrollArea.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.scrollArea.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.scrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 450, 450))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setObjectName("verticalLayout")
+        
+        #setting up dbTable
+
         self.dbTable = QtWidgets.QTableWidget(self.centralwidget)
-        self.dbTable.setGeometry(QtCore.QRect(10, 10, 781, 571))
+        self.dbTable.setGeometry(QtCore.QRect(10, 10, 370, 350))
         self.dbTable.setGridStyle(QtCore.Qt.SolidLine)
         self.dbTable.setColumnCount(3)
         self.dbTable.setObjectName("dbTable")
