@@ -5,7 +5,6 @@ import webbrowser
 import multiprocessing
 import sys
 import requests
-import threading
 sys.path.append('../')
 from DAL.db import *
 from UI.hist import *
